@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
 
@@ -14,21 +15,47 @@ export class RegisterComponent implements OnInit {
   acno="";
   pwd="";
 
-  constructor(private dataservice:DataService,private router:Router) { }
+ registerform = this.fb.group({
+
+  uname:['',[Validators.required,Validators.pattern('[a-zA-Z)]*')]],
+  acno:['',[Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern('[0-9]*')]],
+  pwd:['',[Validators.required,Validators.pattern('[a-zA-Z 0-9]*')]]
+ })
+  constructor(private dataservice:DataService,private router:Router,private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
   register(){
-    // this.dataservice.register(this.acno,this.uname,this.pwd)
-    // console.log(this.uname,this.acno,this.pwd);
-
-    var result=this.dataservice.register(this.acno,this.uname,this.pwd)
+    
+    if(this.registerform.get('uname')?.errors){
+      alert("invalid username")
+    }
+    
+    if(this.registerform.value){
+      var result=this.dataservice.register(this.registerform.value.acno,this.registerform.value.uname,this.registerform.value.pwd)
     if(result){
       this.router.navigateByUrl("")
     }
     else{
       this.router.navigateByUrl("")
     }
+  }
+  else{
+    alert("invalid form")
+  }
+  
+    // console.log(this.registerform.value);
+    
+    // this.dataservice.register(this.acno,this.uname,this.pwd)
+    // console.log(this.uname,this.acno,this.pwd);
+
+    // var result=this.dataservice.register(this.registerform.value.acno,this.registerform.value.uname,this.registerform.value.pwd)
+    // if(result){
+    //   this.router.navigateByUrl("")
+    // }
+    // else{
+    //   this.router.navigateByUrl("")
+    // }
 
   }
 

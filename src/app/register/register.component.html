@@ -1,20 +1,24 @@
-<form (ngSubmit)="register()">
+<form [formGroup]= "registerform" (ngSubmit)="register()">
 <div class="container">
   
       <h1>SIGN UP ON FEDARAL BANK</h1>
 
       <div class="mb-3">
           <label for="username" class="form-label">Username</label>
-          <input type="text" [(ngModel)]="uname" name="uname" class="form-control" id="acno">
+          <input type="text" formControlName="uname" name="uname" class="form-control" id="acno"> 
+            <div *ngIf="(this.registerform.get('uname')?.touched||this.registerform.get('uname')?.dirty)&&this.registerform.get('uname')?.errors"  class="errors">invalid user name </div>
+       <!-- <input type="text" [(ngModel)]="uname" name="uname" class="form-control" id="acno"> -->
       </div>
       
       <div class="mb-3">
           <label for="accountnumber" class="form-label">Account number</label>
-          <input type="text"  [(ngModel)]="acno" name="acno" class="form-control" id="acno">
-      </div>
+          <input type="text"  formControlName="acno" name="acno" class="form-control" id="acno">
+          <div *ngIf="(this.registerform.get('acno')?.touched||this.registerform.get('acno')?.dirty)&&this.registerform.get('acno')?.errors"  class="errors">invalid user name </div>
+        </div>
       <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" [(ngModel)]="pwd" name="uname" class="form-control" id="pwd">
+          <input type="password" formControlName="pwd" name="uname" class="form-control" id="pwd">
+          <div *ngIf="(this.registerform.get('pwd')?.touched||this.registerform.get('pwd')?.dirty)&&this.registerform.get('pwd')?.errors"  class="errors">invalid user name </div>
       </div>
       <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
