@@ -1,26 +1,31 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()">
 <div class="container">
-  <form>
+ 
       <h1>WELCOME TO FEDARAL BANK</h1>
       {{dem}}
       <div class="mb-3">
           <label for="accountnumber" class="form-label">Account number</label>
           <!-- <input type="text" [value]="unm" (change)="getusername($event)" class="form-control" id="acno"> -->
           <!-- <input type="text" #accno class="form-control" id="acno"> -->
-          <input type="text" [(ngModel)]="acno" name="acno" class="form-control" id="acno">
+          <!-- <input type="text" [(ngModel)]="acno" name="acno" class="form-control" id="acno"> -->
+          <input type="text" formControlName="acno" name="acno" class="form-control" id="acno">
+          <div *ngIf="(this.loginForm.get('acno')?.touched||this.loginForm.get('acno')?.dirty)&&this.loginForm.get('acno')?.errors"  class="errors">invalid Account Number </div>
       </div>
       <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
           <!-- <input type="password" (change)="passwordchange($event)" class="form-control" id="pwd"> -->
           <!-- <input type="password" #pswd class="form-control" id="pwd"> -->
-          <input type="password" [(ngModel)]="pswd" name="pwd" class="form-control" id="pwd">
+          <input type="password" formControlName="pswd" name="pswd" class="form-control" id="pwd">
+          <div *ngIf="(this.loginForm.get('pswd')?.touched||this.loginForm.get('pswd')?.dirty)&&this.loginForm.get('pswd')?.errors"  class="errors">invalid password </div>
       </div>
       <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
           <a href="">sign up</a>
       </div>
-      <button type="button" class="btn btn-primary" (click)="login()">Submit</button>
+      <button type="submit" class="btn btn-primary" >Submit</button>
       <a routerLink="register">registration</a>
-  </form>
+ 
 </div>
+</form>
 
