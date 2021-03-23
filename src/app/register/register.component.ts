@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
       alert("invalid username")
     }
     
-    if(this.registerform.value){
+    if(this.registerform.valid){
       var result=this.dataservice.register(this.registerform.value.acno,this.registerform.value.uname,this.registerform.value.pwd)
     if(result){
       this.router.navigateByUrl("")
