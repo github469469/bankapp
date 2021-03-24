@@ -17,25 +17,35 @@ export class DataService {
   }
 
   currentUser: any;
-  constructor() { }
-  // {
+  constructor() { 
 
-    // this.getDetails()
+    this.getDetails();
+  }
+  
 
-  // }
+saveDetaials(){
 
-// saveDetaials(){
+  localStorage.setItem("accountDetails",JSON.stringify(this.accountDetails))
+  if(this.currentUser){
+  localStorage.setItem("currentUser",JSON.stringify(this.currentUser))
+  }
 
-//   localStorage.setItem("accountDetails",JSON.stringify(this.accountDetails))
-//   localStorage.setItem("currentUser",JSON.stringify(this.currentUser))
 
-// }
-// getDetails(){
 
-//  this.accountDetails=localStorage.getItem("accountDetails")
-//   this.accountDetails=localStorage.getItem("currentUser")
 
-// }
+}
+getDetails(){
+
+  if(localStorage.getItem("accountDetails")){
+ this.accountDetails=JSON.parse(localStorage.getItem("accountDetails")||'')
+  
+}
+if(localStorage.getItem("currentUser")){
+  this.currentUser=JSON.parse(localStorage.getItem("currentUser")||'')
+}
+
+}
+
 
 
   register(accno: any, username: any, password: any) {
@@ -52,7 +62,7 @@ export class DataService {
 
 
       }
-      // this.saveDetaials();
+      this.saveDetaials();
       alert("registration is successsful")
       console.log(this.accountDetails);
       return true;
@@ -72,7 +82,7 @@ export class DataService {
 
         alert("login successful");
         this.currentUser = dataset[accno].username
-        // this.saveDetaials();
+        this.saveDetaials();
         return true
       }
       else {
@@ -100,7 +110,7 @@ if (accno in dataset) {
   // console.log(pswd1)
   if (pswd1 == pswd) {
     dataset[accno].balance+=amt
-    // this.saveDetaials();
+    this.saveDetaials();
     console.log(dataset[accno].balance);
     
     alert("Account credited with amount:" + amount+" New balance is :" + dataset[accno].balance);
@@ -128,7 +138,7 @@ if (accno in dataset) {
   // console.log(pswd1)
   if (pswd1 == pswd) {
     dataset[accno].balance -= amt
-    // this.saveDetaials();
+    this.saveDetaials();
 
     alert("Account credited with amount:" + amount+" New balance is :" + dataset[accno].balance);
 
