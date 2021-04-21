@@ -1,12 +1,15 @@
 
-
-<div class ="container">
-  <h1 class="form-control">WELCOME TO FEDERAL BANK {{this.uname}}</h1>
+  <!-- <div class="container"> -->
+    <app-animation-demo></app-animation-demo>
+  <h1 class="form-control">WELCOME TO FEDERAL BANK {{name}}</h1>
+  
   <form [formGroup]="withdrawForm" (ngSubmit)="withdraw()" >
 
-            <h1>CASH  WITHDRAWAL FORM</h1>
-                
-            <div class="mb-3">
+            <h1 appHighlight>CASH  WITHDRAWAL FORM</h1>
+            <div [ngClass]="acno? 'red':''">
+
+
+            <div class="mb-3" >
               <label for="exampleInputEmail1" class="form-label">ACCOUNT NUMBER</label>
               <input type="text" formControlName="accno" class="form-control" id="accno" aria-describedby="emailHelp" >
           <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
@@ -34,19 +37,23 @@
               <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div> -->
             <button type="submit" class="btn btn-primary">withdrawal</button>
+            </div>
       </form>
 
 
 
       <form [formGroup]="depositForm"(ngSubmit)="deposit()">
-          <h1>CASH  DESPOSIT FORM</h1>
-        
+          <h1 appHighlight>CASH  DESPOSIT FORM</h1>
+        <div [ngClass]="acno? 'red':''">
           <div class="mb-3">
+            <!-- [ngclass]="accno? 'red':''" -->
+            
             <label for="exampleInputEmail1" class="form-label">ACCOUNT NUMBER</label>
             <input type="text" formControlName="accno"class="form-control" id="accno" aria-describedby="emailHelp">
         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
         <div *ngIf="(this.depositForm.get('accno')?.touched||this.depositForm.get('accno')?.dirty)&&this.depositForm.get('accno')?.errors"  class="errors">invalid Account Number </div>
-          </div>
+          
+        </div>
           <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">ACCOUNT BALANCE</label>
               <input type="text" formControlName="amt"  class="form-control" id="amt" aria-describedby="emailHelp">
@@ -60,8 +67,23 @@
                 </div>
             </div>
               <button type="submit"class="btn btn-primary">deposit</button>
-            
-              </form>
             </div>
+          </form>
+            
+          <p>Login date (unformatted) : {{lLogin}}</p>
+          <p>Login date: {{lLogin | date}}</p>
+          <p>Login date: {{lLogin | date:'medium'}}</p>
+          <p>Login date: {{lLogin | date|uppercase}}</p>
+
+
+            <div>
+              <app-delete-confirmation (onCancel)="onCancel()" (onDelete)="onDelete($event)" [item]="acno"> </app-delete-confirmation>
+              <br>
+              <br>
+              <button type="submit" class="btn btn-primary" value="proceed"(click)="delete()">Delete Account</button>
+
+            </div>
+       <!-- </div> -->
+           
        
-        
+         

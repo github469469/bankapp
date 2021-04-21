@@ -70,21 +70,59 @@ export class LoginComponent implements OnInit {
 
 //   }
 if(this.loginForm.valid){
-  var acno=this.loginForm.value.acno
-  console.log(acno)
-  var psd= this.loginForm.value.pswd
-  console.log(psd)
-  var result=this.dataservice.login(this.loginForm.value.acno,this.loginForm.value.pswd)
-  if(result){
   
-    this.router.navigateByUrl("dashboard")
-  }
+   var acno=this.loginForm.value.acno
+    console.log(acno)
+    var psd= this.loginForm.value.pswd
+    console.log(psd)
   
+  
+  
+  this.dataservice.login(this.loginForm.value.acno,this.loginForm.value.pswd)
+  .subscribe((data:any) => {
+
+    if (data) {
+
+      alert(data.message)
+      localStorage.setItem("name",data.name)
+      localStorage.setItem("accno",data.accno)
+      this.router.navigateByUrl("dashboard")
+    }
+
+
+
+
+  },(data)=> {
+
+    alert(data.error.message)
+
+  })
 }
-else{
-  alert("Invalid Form")
+else {
+
+alert("invalid forms")
 }
 
-  }
-
 }
+}
+
+
+
+//   var acno=this.loginForm.value.acno
+//   console.log(acno)
+//   var psd= this.loginForm.value.pswd
+//   console.log(psd)
+//   var result=this.dataservice.login(this.loginForm.value.acno,this.loginForm.value.pswd)
+//   if(result){
+  
+//     this.router.navigateByUrl("dashboard")
+//   }
+  
+// }
+// else{
+//   alert("Invalid Form")
+// }
+
+//   }
+
+// }

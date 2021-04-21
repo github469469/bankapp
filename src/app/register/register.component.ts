@@ -11,41 +11,71 @@ import { DataService } from '../services/data.service';
 export class RegisterComponent implements OnInit {
 
 
-  uname="";
-  acno="";
-  pwd="";
+  uname = "";
+  acno = "";
+  pwd = "";
 
- registerform = this.fb.group({
+  registerform = this.fb.group({
 
-  uname:['',[Validators.required,Validators.pattern('[a-zA-Z)]*')]],
-  acno:['',[Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern('[0-9]*')]],
-  pwd:['',[Validators.required,Validators.pattern('[a-zA-Z 0-9]*')]]
- })
-  constructor(private dataservice:DataService,private router:Router,private fb:FormBuilder) { }
+    uname: ['', [Validators.required, Validators.pattern('[a-zA-Z)]*')]],
+    acno: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('[0-9]*')]],
+    pwd: ['', [Validators.required, Validators.pattern('[a-zA-Z 0-9]*')]]
+  })
+  constructor(private dataservice: DataService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
-  register(){
-    
-    if(this.registerform.get('uname')?.errors){
-      alert("invalid username")
+  register() {
+    // {
+
+    //   if(this.registerform.get('uname')?.errors){
+    //     alert("invalid username")
+    //   }
+
+    if (this.registerform.valid) {
+      
+      this.dataservice.register(this.registerform.value.acno, this.registerform.value.uname, this.registerform.value.pwd)
+      .subscribe((data:any)=> {
+
+          if (data) {
+
+            alert(data.message)
+            this.router.navigateByUrl("")
+          }
+
+
+
+
+        },(data)=> {
+
+          alert(data.error.message)
+
+        })
     }
-    
-    if(this.registerform.valid){
-      var result=this.dataservice.register(this.registerform.value.acno,this.registerform.value.uname,this.registerform.value.pwd)
-    if(result){
-      this.router.navigateByUrl("")
+    else {
+
+      alert("invalid forms")
     }
-    else{
-      this.router.navigateByUrl("")
-    }
+
   }
-  else{
-    alert("invalid form")
-  }
-  
+}
+
+
+
+
+  //   if(result){
+  //     this.router.navigateByUrl("")
+  //   }
+  //   else{
+  //     this.router.navigateByUrl("")
+  //   }
+  // }
+  // else{
+  //   alert("invalid form")
+  // }
+
     // console.log(this.registerform.value);
-    
+
     // this.dataservice.register(this.acno,this.uname,this.pwd)
     // console.log(this.uname,this.acno,this.pwd);
 
@@ -57,8 +87,8 @@ export class RegisterComponent implements OnInit {
     //   this.router.navigateByUrl("")
     // }
 
-  }
+//   }
 
-}
+// }
 
 
